@@ -6,4 +6,7 @@
     <string name="sign_in">Sign In</string>
     <string name="email">Email</string>
     <string name="password">password</string>
+    <string name="name">Name</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="go_back_to">Go back to</string>
 </resources>
