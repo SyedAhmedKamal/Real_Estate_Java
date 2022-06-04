@@ -9,4 +9,9 @@
     <string name="name">Name</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="go_back_to">Go back to</string>
+    <string name="sign_up">Sign UP</string>
+    <string name="home">Home</string>
+    <string name="add">Add</string>
+    <string name="favourite">Favourite</string>
+    <string name="profile">Profile</string>
 </resources>

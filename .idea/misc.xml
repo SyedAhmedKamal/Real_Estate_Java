@@ -5,12 +5,19 @@
       <map>
         <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/drawable/button_backgroun_two.xml" value="0.2205" />
         <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/drawable/button_background.xml" value="0.2205" />
+        <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/activity_create_new_add.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/activity_fragment_container.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/activity_main.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/activity_sign_in.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/activity_sign_up.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/activity_splash.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/fragment_create_new_add.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/fragment_home.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/fragment_no_internet.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/fragment_view_add.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/no_connection_layout.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/simmer_list_layout.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/menu/bottom_nav_menu.xml" value="0.27291666666666664" />
       </map>
     </option>
   </component>

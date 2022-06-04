@@ -19,7 +19,6 @@ public class SplashActivity extends AppCompatActivity {
         binding = ActivitySplashBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        getSupportActionBar().hide();
 
         binding.signIn.setOnClickListener(view -> {
             startActivity(new Intent(SplashActivity.this, SignInActivity.class));

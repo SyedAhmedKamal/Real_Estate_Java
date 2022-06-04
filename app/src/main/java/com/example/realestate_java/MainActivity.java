@@ -16,7 +16,6 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
-    private NetworkStateCheck networkStateCheck;
     private TextView textView;
     private ShimmerFrameLayout shimmerFrameLayout;
 
@@ -40,26 +39,5 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkInternet() {
-        networkStateCheck = new NetworkStateCheck();
-        registerReceiver(networkStateCheck, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-
-        networkStateCheck.check.observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean result) {
-                Log.d(TAG, "onChanged: "+result);
-
-                if (result){
-                    shimmerFrameLayout.setVisibility(View.VISIBLE);
-                    textView.setVisibility(View.GONE);
-                    textView.setText("Welcome");
-                }
-            }
-        });
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unregisterReceiver(networkStateCheck);
     }
 }

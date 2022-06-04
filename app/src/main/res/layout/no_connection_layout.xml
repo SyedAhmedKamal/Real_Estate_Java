@@ -4,32 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragments.HomeFragment">
+    tools:context=".view.fragments.NoInternetFragment">
 
-    <TextView
-        android:id="@+id/tv_main"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Back to online"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
 
     <LinearLayout
-        android:id="@+id/no_internet"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible">
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <ImageView
@@ -46,7 +32,6 @@
             android:textSize="@dimen/_13ssp" />
 
         <Button
-            android:id="@+id/refreshBtn"
             style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,6 +39,4 @@
             android:text="Refresh"
             android:textColor="@color/black" />
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
-

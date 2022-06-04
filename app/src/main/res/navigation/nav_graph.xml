@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment_nav">
+
+    <fragment
+        android:id="@+id/homeFragment_nav"
+        android:name="com.example.realestate_java.view.fragments.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home" >
+
+    </fragment>
+    <fragment
+        android:id="@+id/myFavouritesListFragment_nav"
+        android:name="com.example.realestate_java.view.fragments.MyFavouritesListFragment"
+        android:label="Favourites"
+        tools:layout="@layout/fragment_my_favourites_list" >
+
+    </fragment>
+    <fragment
+        android:id="@+id/userProfileFragment_nav"
+        android:name="com.example.realestate_java.view.fragments.UserProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_user_profile" >
+
+    </fragment>
+    <activity
+        android:id="@+id/createNewAddActivity_nav"
+        android:name="com.example.realestate_java.view.CreateNewAddActivity"
+        android:label="Create New Advertisement"
+        tools:layout="@layout/activity_create_new_add" />
+
+</navigation>

@@ -149,7 +149,7 @@
             android:layout_marginBottom="@dimen/_7sdp"
             android:background="@drawable/button_backgroun_two"
             android:imeOptions="actionGo"
-            android:text="Sign UP"
+            android:text="@string/sign_up"
             app:layout_constraintBottom_toTopOf="@+id/textView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
