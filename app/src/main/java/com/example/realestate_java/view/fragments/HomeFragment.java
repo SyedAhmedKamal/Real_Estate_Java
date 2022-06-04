@@ -26,14 +26,19 @@ import com.example.realestate_java.view.FragmentContainerActivity;
 
 import java.util.Objects;
 
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
 
 public class HomeFragment extends Fragment {
 
     private static final String TAG = "HomeFragment";
-    private NetworkStateCheck networkStateCheck;
     private LinearLayout noInternet;
     private TextView textView;
     private Button refreshButton;
+
+    @Inject
+    NetworkStateCheck networkStateCheck;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

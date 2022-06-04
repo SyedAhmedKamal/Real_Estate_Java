@@ -19,6 +19,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class FragmentContainerActivity extends AppCompatActivity {
 
     public ActivityFragmentContainerBinding binding;

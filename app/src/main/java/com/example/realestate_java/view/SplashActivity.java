@@ -8,10 +8,15 @@ import android.os.Handler;
 
 import com.example.realestate_java.R;
 import com.example.realestate_java.databinding.ActivitySplashBinding;
+import com.google.firebase.auth.FirebaseAuth;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class SplashActivity extends AppCompatActivity {
 
     private ActivitySplashBinding binding;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,20 +24,23 @@ public class SplashActivity extends AppCompatActivity {
         binding = ActivitySplashBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        auth = FirebaseAuth.getInstance();
 
-        binding.signIn.setOnClickListener(view -> {
-            startActivity(new Intent(SplashActivity.this, SignInActivity.class));
-            finish();
-        });
-
-
-       /* new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
+        if (auth.getCurrentUser() != null) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    startActivity(new Intent(SplashActivity.this, FragmentContainerActivity.class));
+                    finish();
+                }
+            }, 1000);
+        } else {
+            binding.signIn.setOnClickListener(view -> {
                 startActivity(new Intent(SplashActivity.this, SignInActivity.class));
                 finish();
-            }
-        }, 1000);*/
+            });
+        }
+
 
     }
 }
