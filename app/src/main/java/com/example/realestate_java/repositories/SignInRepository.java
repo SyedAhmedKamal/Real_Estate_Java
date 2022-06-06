@@ -59,7 +59,7 @@ public class SignInRepository {
 
                     if (task.isSuccessful()) {
                         User newUser = new User(name, email, password, phone, timeStamp);
-                        databaseReference.child(auth.getUid()).setValue(newUser)
+                        databaseReference.child(auth.getUid()).child("ProfileInfo").setValue(newUser)
                                 .addOnCompleteListener(task1 -> {
 
                                     if (task1.isSuccessful()) {

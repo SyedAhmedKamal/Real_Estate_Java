@@ -8,6 +8,8 @@ public class User {
     private String phoneNumber;
     private String createTime;
 
+    private String profileImageUrl;
+
     public User() {
     }
 
@@ -37,5 +39,13 @@ public class User {
 
     public String getCreateTime() {
         return createTime;
+    }
+
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
+
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
     }
 }

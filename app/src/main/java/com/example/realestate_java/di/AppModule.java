@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.realestate_java.network.NetworkStateCheck;
 import com.example.realestate_java.repositories.SignInRepository;
+import com.example.realestate_java.repositories.UploadProfileImageRepo;
 
 import javax.inject.Singleton;
 
@@ -24,13 +25,17 @@ public class AppModule {
 
     @Provides
     @Singleton
-    public NetworkStateCheck provideNetworkClass(){
+    public NetworkStateCheck provideNetworkClass() {
         return new NetworkStateCheck();
     }
 
     @Provides
-    public SignInRepository provideSignInRepo(){
+    public SignInRepository provideSignInRepo() {
         return new SignInRepository();
     }
 
+    @Provides
+    public UploadProfileImageRepo provideUploadImageRepo() {
+        return new UploadProfileImageRepo();
+    }
 }

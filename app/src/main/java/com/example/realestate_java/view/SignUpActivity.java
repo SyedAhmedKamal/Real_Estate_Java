@@ -16,7 +16,9 @@ import com.example.realestate_java.model.User;
 import com.example.realestate_java.viewmodel.AuthViewModel;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.util.Date;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -42,7 +44,7 @@ public class SignUpActivity extends AppCompatActivity {
             String c_password = binding.edConfirmPassTxtRes.getText().toString().trim();
             String name = binding.edNameTxtRes.getText().toString().trim();
             String phone = binding.edPhoneTxtRes.getText().toString().trim();
-            String timeStamp = Timestamp.from(Instant.now()).toString();
+            String timeStamp = (new SimpleDateFormat("ddMMyyyyhhmmss")).format(new Date());
 
             if (email.isEmpty()) {
                 binding.edUsernameRes.setError("Required");
