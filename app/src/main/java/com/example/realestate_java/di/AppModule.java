@@ -3,6 +3,7 @@ package com.example.realestate_java.di;
 import android.content.Context;
 
 import com.example.realestate_java.network.NetworkStateCheck;
+import com.example.realestate_java.repositories.ProfileInfoRepo;
 import com.example.realestate_java.repositories.SignInRepository;
 import com.example.realestate_java.repositories.UploadProfileImageRepo;
 
@@ -37,5 +38,10 @@ public class AppModule {
     @Provides
     public UploadProfileImageRepo provideUploadImageRepo() {
         return new UploadProfileImageRepo();
+    }
+
+    @Provides
+    public ProfileInfoRepo provideProfileInfoRepo() {
+        return new ProfileInfoRepo();
     }
 }

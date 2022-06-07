@@ -3,6 +3,8 @@ package com.example.realestate_java.view.fragments;
 import static com.example.realestate_java.Adapter.UserProfileAdapterMVT.VIEW_ONE_PROFILE;
 
 import android.content.ContentResolver;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -10,8 +12,10 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,29 +25,44 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.realestate_java.Adapter.UserProfileAdapterMVT;
 import com.example.realestate_java.R;
+import com.example.realestate_java.model.User;
 import com.example.realestate_java.model.UserProfileAdapterModel;
+import com.example.realestate_java.network.NetworkStateCheck;
 import com.example.realestate_java.uitl.UserProfileClickListener;
+import com.example.realestate_java.viewmodel.ProfileInfoViewModel;
 import com.example.realestate_java.viewmodel.UploadProfileImageViewModel;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 public class UserProfileFragment extends Fragment implements UserProfileClickListener {
 
+    @Inject
+    NetworkStateCheck networkStateCheck;
+
     private static final String TAG = "UserProfileFragment";
+
     private RecyclerView recyclerView;
     private ArrayList<UserProfileAdapterModel> list;
     private UserProfileAdapterMVT adapter;
     private Uri imgUri;
+    private LinearLayout noInternet;
+    private Button refreshButton;
 
     private ActivityResultLauncher<String> uploadProfileImageLauncher;
     private UploadProfileImageViewModel viewModel;
 
     ImageView addProfileImage;
+
+    private ProfileInfoViewModel profileInfoViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,6 +73,8 @@ public class UserProfileFragment extends Fragment implements UserProfileClickLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        networkStateCheck = new NetworkStateCheck();
+        requireActivity().registerReceiver(networkStateCheck, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_user_profile, container, false);
     }
@@ -62,23 +83,64 @@ public class UserProfileFragment extends Fragment implements UserProfileClickLis
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        viewModel = new ViewModelProvider(requireActivity()).get(UploadProfileImageViewModel.class);
         getImageUri();
 
+        viewModel = new ViewModelProvider(requireActivity()).get(UploadProfileImageViewModel.class);
+        profileInfoViewModel = new ViewModelProvider(requireActivity()).get(ProfileInfoViewModel.class);
+
+        refreshButton = view.findViewById(R.id.refresh_btn_pro);
+        noInternet = view.findViewById(R.id.no_internet_layout);
         recyclerView = view.findViewById(R.id.recyclerViewProfile);
         addProfileImage = view.findViewById(R.id.add_profile_image_btn);
 
         list = new ArrayList<>();
-        list.add(new UserProfileAdapterModel(VIEW_ONE_PROFILE, "", "Shah", "gmail", "0312"));
 
-        adapter = new UserProfileAdapterMVT(list, this);
+        internetCheck();
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        recyclerView.setAdapter(adapter);
+        refreshButton.setOnClickListener(view1 -> {
+            internetCheck();
+        });
 
-       /* addProfileImage.setOnClickListener(view1 -> {
-            uploadProfileImageLauncher.launch("image/*");
-        });*/
+    }
+
+    private void internetCheck() {
+        networkStateCheck.check.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean connected) {
+
+                if (connected) {
+                    noInternet.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.VISIBLE);
+                    loadProfileInfo();
+                } else {
+                    noInternet.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
+    private void loadProfileInfo() {
+        profileInfoViewModel.getProfileData().observe(getViewLifecycleOwner(), new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+
+                Log.d(TAG, "onChanged: called");
+
+                list.clear();
+
+                list.add(0, new UserProfileAdapterModel(VIEW_ONE_PROFILE,
+                        user.getProfileImageUrl(),
+                        user.getName(),
+                        String.format("Email " + user.getEmail()),
+                        String.format("Phone Number " + user.getPhoneNumber())));
+
+                adapter = new UserProfileAdapterMVT(list, UserProfileFragment.this);
+
+                recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+                recyclerView.setAdapter(adapter);
+            }
+        });
     }
 
     private void getImageUri() {
@@ -107,10 +169,9 @@ public class UserProfileFragment extends Fragment implements UserProfileClickLis
                     .observe(requireActivity(), new Observer<Boolean>() {
                         @Override
                         public void onChanged(Boolean result) {
-                            if (result){
+                            if (result) {
                                 Toast.makeText(requireActivity(), "Success", Toast.LENGTH_SHORT).show();
-                            }
-                            else{
+                            } else {
                                 Toast.makeText(requireActivity(), "Error occur", Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -121,5 +182,11 @@ public class UserProfileFragment extends Fragment implements UserProfileClickLis
     @Override
     public void selectImage(int position) {
         uploadProfileImageLauncher.launch("image/*");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        requireActivity().unregisterReceiver(networkStateCheck);
     }
 }

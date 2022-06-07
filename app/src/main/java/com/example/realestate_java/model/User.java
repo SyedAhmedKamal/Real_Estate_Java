@@ -21,6 +21,15 @@ public class User {
         this.createTime = createTime;
     }
 
+    public User(String name, String email, String password, String phoneNumber, String createTime, String profileImageUrl) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.createTime = createTime;
+        this.profileImageUrl = profileImageUrl;
+    }
+
     public String getName() {
         return name;
     }
