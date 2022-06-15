@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/_6sdp"
+    android:layout_marginTop="@dimen/_6sdp"
+    android:layout_marginEnd="@dimen/_6sdp"
     android:layout_marginBottom="@dimen/_16sdp"
     android:background="@color/secondaryBlue">
 
@@ -50,6 +53,7 @@
             android:text="Syed Ahmed Kamal"
             android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title"
             android:textSize="@dimen/_16ssp"
+            android:textStyle="bold"
 
             />
 
@@ -61,7 +65,7 @@
             android:layout_marginTop="@dimen/_20sdp"
             android:layout_marginEnd="@dimen/_20sdp"
             android:gravity="left"
-            android:text="Email"
+            android:text="Email: "
             android:textAppearance="@style/TextAppearance.Material3.DisplaySmall"
             android:textSize="@dimen/_13ssp"
 
@@ -76,7 +80,7 @@
             android:layout_marginEnd="@dimen/_20sdp"
             android:layout_marginBottom="@dimen/_20sdp"
             android:gravity="left"
-            android:text="Phone"
+            android:text="Phone: "
             android:textAppearance="@style/TextAppearance.Material3.DisplaySmall"
             android:textSize="@dimen/_13ssp"
 
