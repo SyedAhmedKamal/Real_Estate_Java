@@ -15,4 +15,7 @@
     <string name="favourite">Favourite</string>
     <string name="profile">Profile</string>
     <string name="close">close</string>
+    <string name="price">Enter price here. It is not mandatory, would be grate for customer for initial price</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="MAPS_API_KEY">AIzaSyDqryKj9a0-liHqZAP2J8algo9Jt8B_iww</string>
 </resources>

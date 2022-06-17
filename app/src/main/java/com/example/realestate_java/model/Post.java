@@ -13,6 +13,7 @@ public class Post {
     private String postTitle;
     private String postSubtitle;
     private String postCategory;
+    private String postSubCategory;
     private String price;
     private String postLocation;
     private String postDescription;
@@ -29,6 +30,7 @@ public class Post {
                 List<String> postImagesList,
                 String postTitle,
                 String postCategory,
+                String postSubCategory,
                 String postDescription,
                 String contactInfo) {
 
@@ -41,6 +43,7 @@ public class Post {
         this.postCategory = postCategory;
         this.postDescription = postDescription;
         this.contactInfo = contactInfo;
+        this.postSubCategory = postSubCategory;
     }
 
     // If all info available
@@ -52,6 +55,7 @@ public class Post {
                 String postTitle,
                 String postSubtitle,
                 String postCategory,
+                String postSubCategory,
                 String price,
                 String postLocation,
                 String postDescription,
@@ -69,6 +73,7 @@ public class Post {
         this.postLocation = postLocation;
         this.postDescription = postDescription;
         this.contactInfo = contactInfo;
+        this.postSubCategory = postSubCategory;
     }
 
     public String getUid() {
@@ -117,5 +122,9 @@ public class Post {
 
     public String getContactInfo() {
         return contactInfo;
+    }
+
+    public String getPostSubCategory() {
+        return postSubCategory;
     }
 }

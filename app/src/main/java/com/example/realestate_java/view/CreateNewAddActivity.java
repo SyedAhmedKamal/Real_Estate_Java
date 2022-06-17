@@ -24,11 +24,17 @@ import com.example.realestate_java.R;
 import com.example.realestate_java.databinding.ActivityCreateNewAddBinding;
 import com.example.realestate_java.model.SelectImagesAdapterModel;
 import com.example.realestate_java.uitl.SelectImagesClickListener;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateNewAddActivity extends AppCompatActivity implements SelectImagesClickListener {
+public class CreateNewAddActivity extends AppCompatActivity implements SelectImagesClickListener, OnMapReadyCallback {
 
     private static final String TAG = "CreateNewAddActivity";
     private ActivityCreateNewAddBinding binding;
@@ -38,11 +44,17 @@ public class CreateNewAddActivity extends AppCompatActivity implements SelectIma
     private SelectImagesAdapter adapter;
     private ArrayList<SelectImagesAdapterModel> list;
 
+    private GoogleMap mMap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityCreateNewAddBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.set_map);
+        mapFragment.getMapAsync(this);
 
         selectImages();
         setSupportActionBar(binding.crateNewAddToolBar);
@@ -55,17 +67,19 @@ public class CreateNewAddActivity extends AppCompatActivity implements SelectIma
             activityResultLauncherImages.launch(intent);
         });
 
+        binding.getLocation.setOnClickListener(view -> {
+            startActivity(new Intent(CreateNewAddActivity.this, MapsActivity.class));
+        });
 
         initRecyclerView();
     }
 
     private void initRecyclerView() {
         list = new ArrayList<>();
-        if (imageList.size()==0){
-           binding.selectListImageLayout.setVisibility(View.VISIBLE);
-           binding.selectImagesRecyclerView.setVisibility(View.INVISIBLE);
-        }
-        else {
+        if (imageList.size() == 0) {
+            binding.selectListImageLayout.setVisibility(View.VISIBLE);
+            binding.selectImagesRecyclerView.setVisibility(View.INVISIBLE);
+        } else {
             binding.selectListImageLayout.setVisibility(View.INVISIBLE);
             binding.selectImagesRecyclerView.setVisibility(View.VISIBLE);
             adapter = new SelectImagesAdapter(imageList);
@@ -121,5 +135,15 @@ public class CreateNewAddActivity extends AppCompatActivity implements SelectIma
 
     @Override
     public void selectListOfImages(int position) {
+    }
+
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        mMap = googleMap;
+
+        // Add a marker in Sydney and move the camera
+        LatLng sydney = new LatLng(-34, 151);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 }
