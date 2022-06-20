@@ -96,4 +96,14 @@ dependencies {
     // Shimmer
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+
+    def lifecycle_version = "2.5.0-rc02"
+    // ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel:1.1.1"
+    // LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata:1.1.1"
+    // Lifecycles only (without ViewModel or LiveData)
+    implementation "androidx.lifecycle:lifecycle-runtime:1.1.1"
+
 }

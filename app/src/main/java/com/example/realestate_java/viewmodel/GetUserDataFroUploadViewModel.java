@@ -11,16 +11,14 @@ import javax.inject.Inject;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
 @HiltViewModel
-public class ProfileInfoViewModel extends ViewModel {
+public class GetUserDataFroUploadViewModel extends ViewModel {
 
     ProfileInfoRepo profileInfoRepo;
 
     @Inject
-    public ProfileInfoViewModel(ProfileInfoRepo profileInfoRepo) {
+    public GetUserDataFroUploadViewModel(ProfileInfoRepo profileInfoRepo) {
         this.profileInfoRepo = profileInfoRepo;
     }
-
-    //public ProfileInfoViewModel(){}
 
     public MutableLiveData<User> getProfileData(){
         return profileInfoRepo.getUserInfo();

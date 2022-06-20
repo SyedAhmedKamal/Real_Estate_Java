@@ -1,8 +1,11 @@
 package com.example.realestate_java.view;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.example.realestate_java.R;
 import com.example.realestate_java.databinding.ActivityMapsBinding;
@@ -15,8 +18,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
+    private static final String TAG = "MapsActivity";
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +34,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
+        binding.getLatLang.setOnClickListener(view -> {
+            setResult(0, intent);
+            finish();
+        });
+
     }
 
     /**
@@ -44,9 +56,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        double karachiLat = 24.8607;
+        double karachiLang = 67.0011;
+        float zoom = 16f;
+        float overlaySize = 50f;
+
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng karachi = new LatLng(karachiLat, karachiLang);
+        mMap.addMarker(new MarkerOptions().position(karachi).title("Marker in Karachi"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(karachi));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(karachi, zoom));
+
+        // click on map
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(@NonNull LatLng latLng) {
+
+                // adding marker
+                mMap.addMarker(new MarkerOptions().position(latLng).title("Current position"));
+                intent = new Intent();
+                intent.putExtra("lat", latLng.latitude);
+                intent.putExtra("lang", latLng.longitude);
+                Log.d(TAG, "onMapClick: "+latLng.latitude);
+
+            }
+        });
     }
+
 }

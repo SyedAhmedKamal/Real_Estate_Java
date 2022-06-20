@@ -15,9 +15,12 @@ public class Post {
     private String postCategory;
     private String postSubCategory;
     private String price;
-    private String postLocation;
+    private String postLocationLat;
+    private String postLocationLang;
     private String postDescription;
     private String contactInfo;
+
+    private String address;
 
     public Post() {
     }
@@ -57,7 +60,8 @@ public class Post {
                 String postCategory,
                 String postSubCategory,
                 String price,
-                String postLocation,
+                String postLocationLang,
+                String postLocationLat,
                 String postDescription,
                 String contactInfo) {
 
@@ -70,7 +74,8 @@ public class Post {
         this.postSubtitle = postSubtitle;
         this.postCategory = postCategory;
         this.price = price;
-        this.postLocation = postLocation;
+        this.postLocationLat = postLocationLat;
+        this.postLocationLang = postLocationLang;
         this.postDescription = postDescription;
         this.contactInfo = contactInfo;
         this.postSubCategory = postSubCategory;
@@ -112,10 +117,6 @@ public class Post {
         return price;
     }
 
-    public String getPostLocation() {
-        return postLocation;
-    }
-
     public String getPostDescription() {
         return postDescription;
     }
@@ -126,5 +127,21 @@ public class Post {
 
     public String getPostSubCategory() {
         return postSubCategory;
+    }
+
+    public String getPostLocationLat() {
+        return postLocationLat;
+    }
+
+    public String getPostLocationLang() {
+        return postLocationLang;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }
