@@ -1,19 +1,16 @@
 package com.example.realestate_java.Adapter;
 
-import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.realestate_java.R;
 import com.example.realestate_java.model.SelectImagesAdapterModel;
-import com.example.realestate_java.uitl.SelectImagesClickListener;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
@@ -45,8 +42,8 @@ public class SelectImagesAdapter extends RecyclerView.Adapter<SelectImagesAdapte
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        Glide.with(holder.imageView.getContext()).load(imageList.get(position).getUriArrayList()).into(holder.imageView);
-        Log.d(TAG, "onBindViewHolder: "+imageList.get(position).getUriArrayList());
+        Glide.with(holder.imageView.getContext()).load(imageList.get(position).getImageUri()).into(holder.imageView);
+        Log.d(TAG, "onBindViewHolder: "+imageList.get(position).getImageUri());
     }
 
     @Override

@@ -7,11 +7,10 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
@@ -21,6 +20,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
 import com.example.realestate_java.Adapter.SelectImagesAdapter;
@@ -29,11 +29,9 @@ import com.example.realestate_java.databinding.ActivityCreateNewAddBinding;
 import com.example.realestate_java.model.Post;
 import com.example.realestate_java.model.SelectImagesAdapterModel;
 import com.example.realestate_java.model.User;
+import com.example.realestate_java.repositories.PostRepository;
 import com.example.realestate_java.repositories.ProfileInfoRepo;
 import com.example.realestate_java.uitl.SelectImagesClickListener;
-import com.example.realestate_java.viewmodel.AuthViewModel;
-import com.example.realestate_java.viewmodel.GetUserDataFroUploadViewModel;
-import com.example.realestate_java.viewmodel.ProfileInfoViewModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -57,6 +55,7 @@ public class CreateNewAddActivity extends AppCompatActivity implements SelectIma
     private User userInfo;
     protected static String category;
     protected static String subCategory;
+    private ArrayList<String> imgUrls;
 
     private SelectImagesAdapter adapter;
     private ArrayList<SelectImagesAdapterModel> list;
@@ -67,7 +66,6 @@ public class CreateNewAddActivity extends AppCompatActivity implements SelectIma
     private static double karachiLat = 24.8607;
     private static double karachiLang = 67.0011;
 
-    GetUserDataFroUploadViewModel infoViewModel;
     ProfileInfoRepo profileInfoRepo;
 
     @Override
@@ -86,11 +84,12 @@ public class CreateNewAddActivity extends AppCompatActivity implements SelectIma
             @Override
             public void onChanged(User user) {
                 userInfo = user;
-                Log.d(TAG, "onChanged: called - "+userInfo.getName());
+                Log.d(TAG, "onChanged: called - " + userInfo.getName());
             }
         });
 
 
+        imgUrls = new ArrayList<>();
         imageList = new ArrayList<>();
         initRecyclerView();
 
@@ -111,16 +110,11 @@ public class CreateNewAddActivity extends AppCompatActivity implements SelectIma
             uploadPostNow();
         });
 
+        selectChip();
 
     }
 
-    private void uploadPostNow() {
-
-        String title = binding.editTextTitle.getText().toString().trim();
-        String subTitle = binding.editTextSubtitle.getText().toString().trim();
-        String price = binding.editTextPrice.getText().toString().trim();
-        String contactInfo = binding.editTextContactInfo.getText().toString().trim();
-
+    private void selectChip() {
         binding.houseChip.setOnCheckedChangeListener((compoundButton, b) -> {
             if (compoundButton.isChecked()) {
                 category = "House";
@@ -144,17 +138,25 @@ public class CreateNewAddActivity extends AppCompatActivity implements SelectIma
 
         binding.rentChip.setOnCheckedChangeListener((compoundButton, b) -> {
             if (compoundButton.isChecked()) {
-                category = "for rent";
-                Log.d(TAG, "uploadPostNow: " + category);
+                subCategory = "for rent";
+                Log.d(TAG, "uploadPostNow: " + subCategory);
             }
         });
 
         binding.sellChip.setOnCheckedChangeListener((compoundButton, b) -> {
             if (compoundButton.isChecked()) {
-                category = "for sell";
-                Log.d(TAG, "uploadPostNow: " + category);
+                subCategory = "for sell";
+                Log.d(TAG, "uploadPostNow: " + subCategory);
             }
         });
+    }
+
+    private void uploadPostNow() {
+
+        String title = binding.editTextTitle.getText().toString().trim();
+        String subTitle = binding.editTextSubtitle.getText().toString().trim();
+        String price = binding.editTextPrice.getText().toString().trim();
+        String contactInfo = binding.editTextContactInfo.getText().toString().trim();
 
 
         Geocoder geocoder = new Geocoder(CreateNewAddActivity.this);
@@ -164,7 +166,7 @@ public class CreateNewAddActivity extends AppCompatActivity implements SelectIma
                     .getFromLocation(karachiLat, karachiLang, 1);
             if (addresses != null) {
                 binding.setAddress.setText(addresses.get(0).getAddressLine(0));
-                postObject.setAddress(addresses.toString());
+                //postObject.setAddress(addresses.toString());
             }
             Log.i(TAG, "upload now ADDRESS" + addresses.get(0).getAddressLine(0));
         } catch (IOException e) {
@@ -179,20 +181,30 @@ public class CreateNewAddActivity extends AppCompatActivity implements SelectIma
             Toast.makeText(this, "Category must be selected", Toast.LENGTH_LONG).show();
         } else if (subCategory == null) {
             Toast.makeText(this, "Sub-Category must be selected", Toast.LENGTH_LONG).show();
-        }
-        else if (price.isEmpty()){
+        } else if (price.isEmpty()) {
             binding.editTextPrice.setError("Required*");
-        }
-        else if (contactInfo.isEmpty()){
+        } else if (contactInfo.isEmpty()) {
             binding.editTextContactInfo.setError("Required*");
-        }
-        else{
-            // TODO: 6/20/2022 upload images to storage and get urls to list 
-            FirebaseUser auth = FirebaseAuth.getInstance().getCurrentUser(); 
-            postObject = new Post();
+        } else if (imageList.size() == 0) {
+            Toast.makeText(this, "Select at least one image", Toast.LENGTH_SHORT).show();
+        } else {
+
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+            PostRepository postRepository = new PostRepository();
+
+            postRepository.createPost(imageList, this).observe(this, new Observer<ArrayList<String>>() {
+                @Override
+                public void onChanged(ArrayList<String> strings) {
+                    Log.d(TAG, "onChanged: "+strings.size());
+                }
+            });
+
         }
 
     }
+
+
 
     private void initMapFragment() {
 

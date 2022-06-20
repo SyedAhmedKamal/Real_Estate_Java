@@ -11,7 +11,7 @@ public class SelectImagesAdapterModel {
         this.imgUri = imgUri;
     }
 
-    public Uri getUriArrayList() {
+    public Uri getImageUri() {
         return imgUri;
     }
 }
