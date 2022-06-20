@@ -42,7 +42,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.concurrent.Executors;
 
 public class CreateNewAddActivity extends AppCompatActivity implements SelectImagesClickListener, OnMapReadyCallback {
@@ -166,7 +168,8 @@ public class CreateNewAddActivity extends AppCompatActivity implements SelectIma
                     .getFromLocation(karachiLat, karachiLang, 1);
             if (addresses != null) {
                 binding.setAddress.setText(addresses.get(0).getAddressLine(0));
-                //postObject.setAddress(addresses.toString());
+                postObject = new Post();
+                postObject.setAddress(addresses.toString());
             }
             Log.i(TAG, "upload now ADDRESS" + addresses.get(0).getAddressLine(0));
         } catch (IOException e) {
@@ -195,15 +198,40 @@ public class CreateNewAddActivity extends AppCompatActivity implements SelectIma
 
             postRepository.createPost(imageList, this).observe(this, new Observer<ArrayList<String>>() {
                 @Override
-                public void onChanged(ArrayList<String> strings) {
-                    Log.d(TAG, "onChanged: "+strings.size());
+                public void onChanged(ArrayList<String> imgUrlList) {
+                    Log.d(TAG, "onChanged: " + imgUrlList.size());
+                    postObject = new Post(
+                            user.getUid(),
+                            userInfo.getName(),
+                            userInfo.getProfileImageUrl(),
+                            (new SimpleDateFormat("ddMMyyyyhhmmss")).format(new Date()),
+                            imgUrlList,
+                            title,
+                            subTitle,
+                            category,
+                            subCategory,
+                            price,
+                            karachiLat,
+                            karachiLang,
+                            contactInfo
+                    );
+
+                    postRepository.storeDataToFirebaseDB(postObject).observe(CreateNewAddActivity.this, new Observer<Boolean>() {
+                        @Override
+                        public void onChanged(Boolean result) {
+                            if (result) {
+                                Log.d(TAG, "onChanged: success");
+                                finish();
+                            } else {
+                                Log.d(TAG, "onChanged: failed");
+                            }
+                        }
+                    });
                 }
             });
 
         }
-
     }
-
 
 
     private void initMapFragment() {

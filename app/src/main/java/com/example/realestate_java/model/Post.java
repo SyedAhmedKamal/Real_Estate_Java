@@ -15,8 +15,8 @@ public class Post {
     private String postCategory;
     private String postSubCategory;
     private String price;
-    private String postLocationLat;
-    private String postLocationLang;
+    private double postLocationLat;
+    private double postLocationLang;
     private String postDescription;
     private String contactInfo;
 
@@ -60,9 +60,8 @@ public class Post {
                 String postCategory,
                 String postSubCategory,
                 String price,
-                String postLocationLang,
-                String postLocationLat,
-                String postDescription,
+                double postLocationLang,
+                double postLocationLat,
                 String contactInfo) {
 
         this.uid = uid;
@@ -76,7 +75,6 @@ public class Post {
         this.price = price;
         this.postLocationLat = postLocationLat;
         this.postLocationLang = postLocationLang;
-        this.postDescription = postDescription;
         this.contactInfo = contactInfo;
         this.postSubCategory = postSubCategory;
     }
@@ -129,11 +127,11 @@ public class Post {
         return postSubCategory;
     }
 
-    public String getPostLocationLat() {
+    public double getPostLocationLat() {
         return postLocationLat;
     }
 
-    public String getPostLocationLang() {
+    public double getPostLocationLang() {
         return postLocationLang;
     }
 

@@ -30,8 +30,9 @@ public class PostRepository {
     DatabaseReference databaseReference;
     FirebaseStorage firebaseStorage;
     MutableLiveData<String> mutableLiveData;
-    MutableLiveData<ArrayList<String>> postCreatedMutableLiveData;
+    MutableLiveData<ArrayList<String>> imageUploadingMutableLiveData;
     private static ArrayList<String> imageUrls;
+    MutableLiveData<Boolean> postCreatedMutableLiveData;
 
     public PostRepository() {
 
@@ -39,8 +40,9 @@ public class PostRepository {
         firebaseStorage = FirebaseStorage.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         mutableLiveData = new MutableLiveData<>();
-        postCreatedMutableLiveData = new MutableLiveData<>();
+        imageUploadingMutableLiveData = new MutableLiveData<>();
         imageUrls = new ArrayList<>();
+        postCreatedMutableLiveData = new MutableLiveData<>();
 
     }
 
@@ -50,7 +52,7 @@ public class PostRepository {
         for (int i = 0; i < imageList.size(); i++) {
             ContentResolver contentResolver = context.getContentResolver();
             MimeTypeMap mime = MimeTypeMap.getSingleton();
-            String imageExtension =  mime.getExtensionFromMimeType(contentResolver.getType(imageList.get(i).getImageUri()));
+            String imageExtension = mime.getExtensionFromMimeType(contentResolver.getType(imageList.get(i).getImageUri()));
 
 
             StorageReference postImgStorage = firebaseStorage
@@ -70,23 +72,23 @@ public class PostRepository {
                                             @Override
                                             public void onComplete(@NonNull Task<Uri> task) {
                                                 imageUrls.add(task.getResult().toString());
-                                                Log.d(TAG, "onComplete: "+task.getResult());
-                                                if (finalI ==imageList.size()-1){
-                                                    postCreatedMutableLiveData.postValue(imageUrls);
+                                                Log.d(TAG, "onComplete: " + task.getResult());
+                                                if (finalI == imageList.size() - 1) {
+                                                    imageUploadingMutableLiveData.postValue(imageUrls);
                                                 }
                                             }
                                         });
                             } else {
-                                Log.d(TAG, "onComplete: "+task.getException());
+                                Log.d(TAG, "onComplete: " + task.getException());
                                 mutableLiveData.postValue(null);
                             }
                         }
                     });
         }
-        return postCreatedMutableLiveData;
+        return imageUploadingMutableLiveData;
     }
 
-   /* public MutableLiveData<Boolean> storeDataToFirebaseDB(Post post) {
+    public MutableLiveData<Boolean> storeDataToFirebaseDB(Post post) {
 
         String postID = databaseReference.push().getKey();
 
@@ -100,14 +102,16 @@ public class PostRepository {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             postCreatedMutableLiveData.postValue(true);
+                            Log.d(TAG, "onComplete: success - " + task.isSuccessful());
                         } else {
+                            Log.d(TAG, "onComplete: exception - " + task.getException());
                             postCreatedMutableLiveData.postValue(false);
                         }
                     }
                 });
 
         return postCreatedMutableLiveData;
-    }*/
+    }
 
 
 }
