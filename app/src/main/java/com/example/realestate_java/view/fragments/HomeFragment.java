@@ -24,11 +24,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.realestate_java.Adapter.PostAdapter;
 import com.example.realestate_java.Adapter.SliderAdapter;
 import com.example.realestate_java.MainActivity;
 import com.example.realestate_java.R;
+import com.example.realestate_java.model.Post;
 import com.example.realestate_java.model.SliderItem;
 import com.example.realestate_java.network.NetworkStateCheck;
+import com.example.realestate_java.repositories.GetPostRepository;
 import com.example.realestate_java.view.FragmentContainerActivity;
 
 import java.util.ArrayList;
@@ -45,6 +48,9 @@ public class HomeFragment extends Fragment {
     private TextView textView;
     private Button refreshButton;
     private RecyclerView recyclerView;
+
+    private RecyclerView postRecyclerView;
+    private ArrayList<Post> postsList;
 
     @Inject
     NetworkStateCheck networkStateCheck;
@@ -68,6 +74,8 @@ public class HomeFragment extends Fragment {
         noInternet = view.findViewById(R.id.no_internet);
         refreshButton = view.findViewById(R.id.refreshBtn);
         recyclerView = view.findViewById(R.id.slider_recyclerView);
+        postRecyclerView = view.findViewById(R.id.postRecyclerView);
+        postsList = new ArrayList<>();
 
         networkStateCheck = new NetworkStateCheck();
         requireActivity().registerReceiver(networkStateCheck, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
@@ -82,9 +90,11 @@ public class HomeFragment extends Fragment {
                     noInternet.setVisibility(View.GONE);
                     viewPagerList();
                     Toast.makeText(requireActivity(), "Connected", Toast.LENGTH_SHORT).show();
+
+                    loadAllPosts();
                 }
                 else{
-                    textView.setVisibility(View.GONE);
+                    //textView.setVisibility(View.GONE);
                     noInternet.setVisibility(View.VISIBLE);
                     Toast.makeText(requireActivity(), "No Internet", Toast.LENGTH_SHORT).show();
                 }
@@ -113,6 +123,22 @@ public class HomeFragment extends Fragment {
 
     }
 
+    private void loadAllPosts() {
+
+        GetPostRepository getPostRepository = new GetPostRepository();
+        getPostRepository.getAllPosts().observe(requireActivity(), new Observer<ArrayList<Post>>() {
+            @Override
+            public void onChanged(ArrayList<Post> posts) {
+
+                postsList.clear();
+                postsList = posts;
+                postRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+                postRecyclerView.setAdapter(new PostAdapter(postsList));
+            }
+        });
+
+    }
+
     private void viewPagerList() {
         ArrayList<SliderItem> sliderItems = new ArrayList<>();
         sliderItems.add(new SliderItem(R.drawable.house, "House"));
@@ -128,5 +154,18 @@ public class HomeFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         requireActivity().unregisterReceiver(networkStateCheck);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause: called");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume: called");
+        loadAllPosts();
     }
 }

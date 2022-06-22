@@ -45,7 +45,9 @@ public class ProfileInfoRepo {
                         if (snapshot.exists()) {
                             User userData = snapshot.getValue(User.class);
 
-                            userData.setProfileImageUrl(snapshot.child("ProfileImage").child("profileImageUrl").getValue().toString());
+                            if (snapshot.child("ProfileImage").child("profileImageUrl").getValue() != null){
+                                userData.setProfileImageUrl(snapshot.child("ProfileImage").child("profileImageUrl").getValue().toString());
+                            }
 
                             userInfoMutableLiveData.postValue(userData);
                             Log.d(TAG, "onDataChange: success - " + userData.getName());

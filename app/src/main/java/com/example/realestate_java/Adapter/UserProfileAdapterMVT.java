@@ -1,8 +1,10 @@
 package com.example.realestate_java.Adapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.realestate_java.R;
+import com.example.realestate_java.model.Post;
 import com.example.realestate_java.model.UserProfileAdapterModel;
 import com.example.realestate_java.uitl.UserProfileClickListener;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -18,6 +21,8 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import java.util.ArrayList;
 
 public class UserProfileAdapterMVT extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+
+    private static final String TAG = "UserProfileAdapterMVT";
 
     public static final int VIEW_ONE_PROFILE = 1;
     public static final int VIEW_TWO_POSTS = 2;
@@ -32,9 +37,10 @@ public class UserProfileAdapterMVT extends RecyclerView.Adapter<RecyclerView.Vie
 
     public static class ProfileDataView extends RecyclerView.ViewHolder {
 
-        RoundedImageView imageView;
+        ImageView imageView;
         TextView name, email, phone;
         ImageView selectImage;
+        Button logoutBtn;
 
         public ProfileDataView(@NonNull View itemView) {
             super(itemView);
@@ -43,6 +49,7 @@ public class UserProfileAdapterMVT extends RecyclerView.Adapter<RecyclerView.Vie
             email = itemView.findViewById(R.id.tv_email);
             phone = itemView.findViewById(R.id.tv_phone);
             selectImage = itemView.findViewById(R.id.add_profile_image_btn);
+            logoutBtn = itemView.findViewById(R.id.logOut);
         }
 
         void bind(int position) {
@@ -58,12 +65,34 @@ public class UserProfileAdapterMVT extends RecyclerView.Adapter<RecyclerView.Vie
             selectImage.setOnClickListener(view -> {
                 listener.selectImage(position);
             });
+
+            logoutBtn.setOnClickListener(view -> {
+                listener.logOut(position);
+            });
         }
     }
 
     public static class ProfilePostsView extends RecyclerView.ViewHolder {
+
+        ImageView imageView;
+        TextView category, subCategory, location;
+
         public ProfilePostsView(@NonNull View itemView) {
             super(itemView);
+            imageView = itemView.findViewById(R.id.roundedImageAdapter);
+            category = itemView.findViewById(R.id.tv_category);
+            subCategory = itemView.findViewById(R.id.subCatgory);
+            location = itemView.findViewById(R.id.tv_location);
+        }
+
+        void bind(int position) {
+
+            UserProfileAdapterModel userProfileAdapterModel = list.get(position);
+            Post post = userProfileAdapterModel.getPost();
+            Glide.with(itemView.getContext()).load(post.getPostImagesList().get(0)).into(imageView);
+            category.setText(post.getPostCategory());
+            subCategory.setText(post.getPostSubCategory());
+            location.setText(post.getAddress());
         }
     }
 
@@ -80,7 +109,11 @@ public class UserProfileAdapterMVT extends RecyclerView.Adapter<RecyclerView.Vie
 
         }
 
-        return null;// not have layout yet
+        return new ProfilePostsView(
+                LayoutInflater.from(parent.getContext()).inflate(
+                        R.layout.item_view_layout,
+                        parent,
+                        false));
     }
 
     @Override
@@ -89,7 +122,7 @@ public class UserProfileAdapterMVT extends RecyclerView.Adapter<RecyclerView.Vie
         if (list.get(position).getViewType() == VIEW_ONE_PROFILE) {
             (new ProfileDataView(holder.itemView)).bind(position);
         } else {
-            // will initialize second view which is posts view
+            (new ProfilePostsView(holder.itemView)).bind(position);
         }
 
     }

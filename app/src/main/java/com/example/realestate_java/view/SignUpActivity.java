@@ -62,7 +62,7 @@ public class SignUpActivity extends AppCompatActivity {
                             @Override
                             public void onChanged(Boolean result) {
                                 if (result) {
-                                    startActivity(new Intent(SignUpActivity.this, FragmentContainerActivity.class));
+                                    startActivity(new Intent(SignUpActivity.this, SignInActivity.class));
                                     finish();
                                 } else {
                                     Toast.makeText(SignUpActivity.this, "Error occur", Toast.LENGTH_SHORT).show();

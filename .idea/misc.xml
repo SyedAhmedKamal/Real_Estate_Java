@@ -7,6 +7,7 @@
         <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/drawable/button_background.xml" value="0.2205" />
         <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/drawable/dotted_border.xml" value="0.2775" />
         <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/drawable/ic_baseline_add_circle_24.xml" value="0.2775" />
+        <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/drawable/ic_baseline_login_24.xml" value="0.247" />
         <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/drawable/ic_outline_add_box_24.xml" value="0.2775" />
         <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/activity_create_new_add.xml" value="0.25" />
         <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/activity_fragment_container.xml" value="0.27291666666666664" />
@@ -28,7 +29,7 @@
         <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/select_images_layout.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/simmer_list_layout.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/slider_item_layout.xml" value="0.22" />
-        <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/user_profile_layout.xml" value="0.5" />
+        <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/user_profile_layout.xml" value="0.25" />
         <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/menu/bottom_nav_menu.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/menu/new_post_menu.xml" value="0.27291666666666664" />
       </map>

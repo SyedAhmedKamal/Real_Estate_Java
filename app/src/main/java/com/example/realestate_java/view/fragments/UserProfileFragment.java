@@ -1,8 +1,10 @@
 package com.example.realestate_java.view.fragments;
 
 import static com.example.realestate_java.Adapter.UserProfileAdapterMVT.VIEW_ONE_PROFILE;
+import static com.example.realestate_java.Adapter.UserProfileAdapterMVT.VIEW_TWO_POSTS;
 
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.Uri;
@@ -32,12 +34,17 @@ import android.widget.Toast;
 
 import com.example.realestate_java.Adapter.UserProfileAdapterMVT;
 import com.example.realestate_java.R;
+import com.example.realestate_java.model.Post;
 import com.example.realestate_java.model.User;
 import com.example.realestate_java.model.UserProfileAdapterModel;
 import com.example.realestate_java.network.NetworkStateCheck;
+import com.example.realestate_java.repositories.GetPostByUserRepo;
 import com.example.realestate_java.uitl.UserProfileClickListener;
+import com.example.realestate_java.view.SignInActivity;
+import com.example.realestate_java.viewmodel.GetPostsByUserViewModel;
 import com.example.realestate_java.viewmodel.ProfileInfoViewModel;
 import com.example.realestate_java.viewmodel.UploadProfileImageViewModel;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
@@ -61,8 +68,10 @@ public class UserProfileFragment extends Fragment implements UserProfileClickLis
     private UploadProfileImageViewModel viewModel;
 
     ImageView addProfileImage;
-
     private ProfileInfoViewModel profileInfoViewModel;
+
+    private GetPostsByUserViewModel getPostsByUserViewModel;
+    private ArrayList<Post> postsList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -87,6 +96,7 @@ public class UserProfileFragment extends Fragment implements UserProfileClickLis
 
         viewModel = new ViewModelProvider(requireActivity()).get(UploadProfileImageViewModel.class);
         profileInfoViewModel = new ViewModelProvider(requireActivity()).get(ProfileInfoViewModel.class);
+        getPostsByUserViewModel = new ViewModelProvider(requireActivity()).get(GetPostsByUserViewModel.class);
 
         refreshButton = view.findViewById(R.id.refresh_btn_pro);
         noInternet = view.findViewById(R.id.no_internet_layout);
@@ -94,12 +104,13 @@ public class UserProfileFragment extends Fragment implements UserProfileClickLis
         addProfileImage = view.findViewById(R.id.add_profile_image_btn);
 
         list = new ArrayList<>();
-
+        postsList = new ArrayList<>();
         internetCheck();
 
         refreshButton.setOnClickListener(view1 -> {
             internetCheck();
         });
+
 
     }
 
@@ -112,9 +123,28 @@ public class UserProfileFragment extends Fragment implements UserProfileClickLis
                     noInternet.setVisibility(View.GONE);
                     recyclerView.setVisibility(View.VISIBLE);
                     loadProfileInfo();
+                    loadProfilePosts();
                 } else {
                     noInternet.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
+    private void loadProfilePosts() {
+        postsList.clear();
+        getPostsByUserViewModel.getPosts().observe(getViewLifecycleOwner(), new Observer<ArrayList<Post>>() {
+            @Override
+            public void onChanged(ArrayList<Post> posts) {
+                postsList = posts;
+                Log.d(TAG, "onChanged: "+posts.size());
+
+                for (Post post:posts) {
+                    Log.d(TAG, "onChanged: postData - "+post.getPostTitle());
+                    list.add(new UserProfileAdapterModel(VIEW_TWO_POSTS, post));
+                    adapter = new UserProfileAdapterMVT(list, UserProfileFragment.this);
+                    recyclerView.setAdapter(adapter);
                 }
             }
         });
@@ -140,6 +170,7 @@ public class UserProfileFragment extends Fragment implements UserProfileClickLis
                 recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
                 recyclerView.setAdapter(adapter);
             }
+
         });
     }
 
@@ -166,7 +197,7 @@ public class UserProfileFragment extends Fragment implements UserProfileClickLis
     private void uploadProfileImage() {
         if (imgUri != null) {
             viewModel.uploadProfileImage(imgUri, getImageExtension(imgUri))
-                    .observe(requireActivity(), new Observer<Boolean>() {
+                    .observe(getViewLifecycleOwner(), new Observer<Boolean>() {
                         @Override
                         public void onChanged(Boolean result) {
                             if (result) {
@@ -182,6 +213,13 @@ public class UserProfileFragment extends Fragment implements UserProfileClickLis
     @Override
     public void selectImage(int position) {
         uploadProfileImageLauncher.launch("image/*");
+    }
+
+    @Override
+    public void logOut(int position) {
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(requireActivity(), SignInActivity.class));
+        requireActivity().finish();
     }
 
     @Override

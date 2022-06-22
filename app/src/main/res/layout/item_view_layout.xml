@@ -12,9 +12,9 @@
         android:orientation="vertical">
 
         <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/roundedImageView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/roundedImageAdapter"
+            android:layout_width="@dimen/_300sdp"
+            android:layout_height="@dimen/_150sdp"
             android:layout_marginTop="@dimen/_7sdp"
             android:src="@drawable/plot"
             app:layout_constraintEnd_toEndOf="parent"
