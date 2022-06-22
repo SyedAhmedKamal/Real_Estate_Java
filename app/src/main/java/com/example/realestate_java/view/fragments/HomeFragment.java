@@ -9,6 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.CompositePageTransformer;
+import androidx.viewpager2.widget.MarginPageTransformer;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,11 +24,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.realestate_java.Adapter.SliderAdapter;
 import com.example.realestate_java.MainActivity;
 import com.example.realestate_java.R;
+import com.example.realestate_java.model.SliderItem;
 import com.example.realestate_java.network.NetworkStateCheck;
 import com.example.realestate_java.view.FragmentContainerActivity;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 import javax.inject.Inject;
@@ -36,6 +44,7 @@ public class HomeFragment extends Fragment {
     private LinearLayout noInternet;
     private TextView textView;
     private Button refreshButton;
+    private RecyclerView recyclerView;
 
     @Inject
     NetworkStateCheck networkStateCheck;
@@ -56,9 +65,9 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        textView = view.findViewById(R.id.tv_main);
         noInternet = view.findViewById(R.id.no_internet);
         refreshButton = view.findViewById(R.id.refreshBtn);
+        recyclerView = view.findViewById(R.id.slider_recyclerView);
 
         networkStateCheck = new NetworkStateCheck();
         requireActivity().registerReceiver(networkStateCheck, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
@@ -69,8 +78,9 @@ public class HomeFragment extends Fragment {
                 Log.d(TAG, "onChanged: " + result);
 
                 if (result) {
-                    textView.setVisibility(View.VISIBLE);
+                    //textView.setVisibility(View.VISIBLE);
                     noInternet.setVisibility(View.GONE);
+                    viewPagerList();
                     Toast.makeText(requireActivity(), "Connected", Toast.LENGTH_SHORT).show();
                 }
                 else{
@@ -88,7 +98,7 @@ public class HomeFragment extends Fragment {
                     Log.d(TAG, "onChanged: " + result);
 
                     if (result) {
-                        textView.setVisibility(View.VISIBLE);
+                        //textView.setVisibility(View.VISIBLE);
                         noInternet.setVisibility(View.GONE);
                         Toast.makeText(requireActivity(), "Connected", Toast.LENGTH_SHORT).show();
                     }
@@ -100,6 +110,17 @@ public class HomeFragment extends Fragment {
                 }
             });
         });
+
+    }
+
+    private void viewPagerList() {
+        ArrayList<SliderItem> sliderItems = new ArrayList<>();
+        sliderItems.add(new SliderItem(R.drawable.house, "House"));
+        sliderItems.add(new SliderItem(R.drawable.shop, "Shop"));
+        sliderItems.add(new SliderItem(R.drawable.plot, "Plot"));
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
+        recyclerView.setAdapter(new SliderAdapter(sliderItems));
 
     }
 

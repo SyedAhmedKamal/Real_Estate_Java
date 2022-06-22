@@ -16,14 +16,18 @@
         <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/activity_sign_up.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/activity_splash.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/fragment_create_new_add.xml" value="0.27291666666666664" />
-        <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/fragment_home.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/fragment_house_post.xml" value="0.22402736212056434" />
         <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/fragment_no_internet.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/fragment_user_profile.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/fragment_view_add.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/house_view_layout.xml" value="0.22402736212056434" />
         <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/image_list_layout.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/item_view_layout.xml" value="0.25" />
         <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/no_connection_layout.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/select_images_layout.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/simmer_list_layout.xml" value="0.27291666666666664" />
+        <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/slider_item_layout.xml" value="0.22" />
         <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/layout/user_profile_layout.xml" value="0.5" />
         <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/menu/bottom_nav_menu.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/AHMED/AndroidStudioProjects/RealEstateJava/app/src/main/res/menu/new_post_menu.xml" value="0.27291666666666664" />

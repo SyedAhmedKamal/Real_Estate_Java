@@ -4,19 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.fragments.HomeFragment">
-
-    <TextView
-        android:id="@+id/tv_main"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Back to online"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
+    tools:context=".view.fragments.HomeFragment"
+    android:background="@color/secondaryBlue"
+    >
 
     <LinearLayout
         android:id="@+id/no_internet"
@@ -29,7 +19,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible">
+        tools:visibility="gone">
 
 
         <ImageView
@@ -54,6 +44,17 @@
             android:text="Refresh"
             android:textColor="@color/black" />
     </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:background="@color/white"
+        android:orientation="horizontal"
+        tools:listitem="@layout/slider_item_layout"
+        android:id="@+id/slider_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_120sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
