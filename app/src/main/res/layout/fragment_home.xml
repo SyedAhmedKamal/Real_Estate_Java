@@ -45,26 +45,28 @@
             android:textColor="@color/black" />
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:background="@color/white"
-        android:orientation="horizontal"
-        tools:listitem="@layout/slider_item_layout"
-        android:id="@+id/slider_recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_120sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/postRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/_7sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/slider_recyclerView" />
+        app:layout_constraintTop_toBottomOf="@+id/searchView" />
+
+    <androidx.appcompat.widget.SearchView
+        android:focusedByDefault="false"
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/white"
+        android:layout_marginBottom="@dimen/_7sdp"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

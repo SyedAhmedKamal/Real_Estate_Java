@@ -48,6 +48,7 @@ public class GetPostRepository {
                            for (DataSnapshot snapshot2:snapshot1.child("Posts").getChildren()){
                                Log.d(TAG, "onDataChange: POST - "+snapshot2.getValue());
 
+
                                Post post = snapshot2.getValue(Post.class);
                                Log.d(TAG, "onDataChange: POSTS - "+post.getPostTitle());
                                postArrayList.add(post);
@@ -60,7 +61,7 @@ public class GetPostRepository {
 
                    @Override
                    public void onCancelled(@NonNull DatabaseError error) {
-
+                       Log.d(TAG, "onCancelled: "+error);
                    }
                });
        return getLivePostMutableLiveData;

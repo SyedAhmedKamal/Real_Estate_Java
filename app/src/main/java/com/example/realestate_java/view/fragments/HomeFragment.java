@@ -7,8 +7,11 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.CompositePageTransformer;
@@ -32,7 +35,9 @@ import com.example.realestate_java.model.Post;
 import com.example.realestate_java.model.SliderItem;
 import com.example.realestate_java.network.NetworkStateCheck;
 import com.example.realestate_java.repositories.GetPostRepository;
+import com.example.realestate_java.repositories.GetSearchedPostRepo;
 import com.example.realestate_java.view.FragmentContainerActivity;
+import com.example.realestate_java.viewmodel.SearchedPostsViewModel;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -41,16 +46,18 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements SearchView.OnQueryTextListener {
 
     private static final String TAG = "HomeFragment";
     private LinearLayout noInternet;
-    private TextView textView;
     private Button refreshButton;
     private RecyclerView recyclerView;
 
     private RecyclerView postRecyclerView;
     private ArrayList<Post> postsList;
+
+    private SearchView searchView;
+    private SearchedPostsViewModel searchedPostsViewModel;
 
     @Inject
     NetworkStateCheck networkStateCheck;
@@ -73,9 +80,14 @@ public class HomeFragment extends Fragment {
 
         noInternet = view.findViewById(R.id.no_internet);
         refreshButton = view.findViewById(R.id.refreshBtn);
-        recyclerView = view.findViewById(R.id.slider_recyclerView);
         postRecyclerView = view.findViewById(R.id.postRecyclerView);
+        searchView = view.findViewById(R.id.searchView);
+
+        searchedPostsViewModel = new ViewModelProvider(requireActivity()).get(SearchedPostsViewModel.class);
+
         postsList = new ArrayList<>();
+
+        searchView.setOnQueryTextListener(this);
 
         networkStateCheck = new NetworkStateCheck();
         requireActivity().registerReceiver(networkStateCheck, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
@@ -88,7 +100,6 @@ public class HomeFragment extends Fragment {
                 if (result) {
                     //textView.setVisibility(View.VISIBLE);
                     noInternet.setVisibility(View.GONE);
-                    viewPagerList();
                     Toast.makeText(requireActivity(), "Connected", Toast.LENGTH_SHORT).show();
 
                     loadAllPosts();
@@ -108,12 +119,10 @@ public class HomeFragment extends Fragment {
                     Log.d(TAG, "onChanged: " + result);
 
                     if (result) {
-                        //textView.setVisibility(View.VISIBLE);
                         noInternet.setVisibility(View.GONE);
                         Toast.makeText(requireActivity(), "Connected", Toast.LENGTH_SHORT).show();
                     }
                     else{
-                        textView.setVisibility(View.GONE);
                         noInternet.setVisibility(View.VISIBLE);
                         Toast.makeText(requireActivity(), "No Internet", Toast.LENGTH_SHORT).show();
                     }
@@ -139,16 +148,6 @@ public class HomeFragment extends Fragment {
 
     }
 
-    private void viewPagerList() {
-        ArrayList<SliderItem> sliderItems = new ArrayList<>();
-        sliderItems.add(new SliderItem(R.drawable.house, "House"));
-        sliderItems.add(new SliderItem(R.drawable.shop, "Shop"));
-        sliderItems.add(new SliderItem(R.drawable.plot, "Plot"));
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL, false));
-        recyclerView.setAdapter(new SliderAdapter(sliderItems));
-
-    }
 
     @Override
     public void onDestroy() {
@@ -167,5 +166,48 @@ public class HomeFragment extends Fragment {
         super.onResume();
         Log.d(TAG, "onResume: called");
         loadAllPosts();
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+
+        if (query.isEmpty()){
+            /*postsList.clear();
+            postRecyclerView.setAdapter(new PostAdapter(postsList));*/
+            loadAllPosts();
+        }
+        else {
+            processQuery(query);
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+
+        if (newText.isEmpty()){
+            /*postsList.clear();
+            postRecyclerView.setAdapter(new PostAdapter(postsList));*/
+            loadAllPosts();
+        }
+        else {
+            processQuery(newText);
+        }
+
+        return false;
+    }
+
+    private void processQuery(String query) {
+        postsList.clear();
+        searchedPostsViewModel.getSearchedPosts(query).observe(getViewLifecycleOwner(), new Observer<ArrayList<Post>>() {
+            @Override
+            public void onChanged(ArrayList<Post> posts) {
+                Log.d(TAG, "onChanged: "+posts.size());
+                postsList = posts;
+                postRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+                postRecyclerView.setAdapter(new PostAdapter(postsList));
+            }
+        });
     }
 }

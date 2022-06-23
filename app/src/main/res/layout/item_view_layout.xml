@@ -13,9 +13,10 @@
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/roundedImageAdapter"
-            android:layout_width="@dimen/_300sdp"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/_150sdp"
-            android:layout_marginTop="@dimen/_7sdp"
+            android:layout_margin="@dimen/_7sdp"
             android:src="@drawable/plot"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +32,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="1.5"
+                android:layout_weight="1.0"
                 android:gravity="center|left"
                 android:orientation="vertical"
                 android:padding="@dimen/_7sdp">
@@ -42,7 +43,7 @@
                     android:layout_margin="@dimen/_3sdp"
                     android:text="Category:"
                     android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
-                    android:textSize="@dimen/_12ssp" />
+                    android:textSize="@dimen/_10ssp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -50,7 +51,7 @@
                     android:layout_margin="@dimen/_3sdp"
                     android:text="Sub-category:"
                     android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
-                    android:textSize="@dimen/_12ssp" />
+                    android:textSize="@dimen/_10ssp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -58,7 +59,7 @@
                     android:layout_margin="@dimen/_3sdp"
                     android:text="Location:"
                     android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
-                    android:textSize="@dimen/_12ssp" />
+                    android:textSize="@dimen/_10ssp" />
 
             </LinearLayout>
 
@@ -66,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="0.75"
+                android:layout_weight="0.50"
                 android:gravity="center|left"
                 android:orientation="vertical"
                 android:padding="@dimen/_7sdp">
@@ -78,7 +79,7 @@
                     android:layout_margin="@dimen/_3sdp"
                     android:text="House"
                     android:textAppearance="@style/TextAppearance.AppCompat.Display3"
-                    android:textSize="@dimen/_12ssp" />
+                    android:textSize="@dimen/_10ssp" />
 
                 <TextView
                     android:id="@+id/subCatgory"
@@ -87,7 +88,7 @@
                     android:layout_margin="@dimen/_3sdp"
                     android:text="for sell"
                     android:textAppearance="@style/TextAppearance.AppCompat.Display3"
-                    android:textSize="@dimen/_12ssp" />
+                    android:textSize="@dimen/_10ssp" />
 
                 <TextView
                     android:id="@+id/tv_location"
@@ -98,7 +99,7 @@
                     android:maxLines="1"
                     android:text="Karachi, sindh"
                     android:textAppearance="@style/TextAppearance.AppCompat.Display3"
-                    android:textSize="@dimen/_12ssp" />
+                    android:textSize="@dimen/_10ssp" />
 
             </LinearLayout>
 
