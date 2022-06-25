@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.example.realestate_java.R;
 import com.example.realestate_java.model.Post;
 import com.example.realestate_java.model.UserProfileAdapterModel;
+import com.example.realestate_java.uitl.TimeAgo;
 import com.example.realestate_java.uitl.UserProfileClickListener;
 import com.makeramen.roundedimageview.RoundedImageView;
 
@@ -76,7 +77,7 @@ public class UserProfileAdapterMVT extends RecyclerView.Adapter<RecyclerView.Vie
     public static class ProfilePostsView extends RecyclerView.ViewHolder {
 
         ImageView imageView;
-        TextView category, subCategory, location;
+        TextView category, subCategory, location, timeAgo;
         CardView cardView;
 
         public ProfilePostsView(@NonNull View itemView) {
@@ -86,6 +87,7 @@ public class UserProfileAdapterMVT extends RecyclerView.Adapter<RecyclerView.Vie
             subCategory = itemView.findViewById(R.id.subCatgory);
             location = itemView.findViewById(R.id.tv_location);
             cardView = itemView.findViewById(R.id.card_view);
+            timeAgo = itemView.findViewById(R.id.tv_time_ago);
         }
 
         void bind(int position) {
@@ -96,6 +98,9 @@ public class UserProfileAdapterMVT extends RecyclerView.Adapter<RecyclerView.Vie
             category.setText(post.getPostCategory());
             subCategory.setText(post.getPostSubCategory());
             location.setText(post.getAddress());
+            timeAgo.setText(new TimeAgo().getTimeAgo(Long.parseLong(post.getCreateDateTime())));
+            Log.d(TAG, "bind: timestamp"+post.getCreateDateTime());
+            Log.d(TAG, "bind: time ago - "+new TimeAgo().getTimeAgo(Long.parseLong(post.getCreateDateTime())));
 
             cardView.setOnClickListener(view -> {
                 listener.onItemClick(position, view);

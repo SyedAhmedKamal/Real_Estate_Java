@@ -11,6 +11,8 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,8 +38,10 @@ import com.example.realestate_java.model.SliderItem;
 import com.example.realestate_java.network.NetworkStateCheck;
 import com.example.realestate_java.repositories.GetPostRepository;
 import com.example.realestate_java.repositories.GetSearchedPostRepo;
+import com.example.realestate_java.uitl.PostClickListener;
 import com.example.realestate_java.view.FragmentContainerActivity;
 import com.example.realestate_java.viewmodel.SearchedPostsViewModel;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -46,10 +50,9 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
-public class HomeFragment extends Fragment implements SearchView.OnQueryTextListener {
+public class HomeFragment extends Fragment implements SearchView.OnQueryTextListener, PostClickListener {
 
     private static final String TAG = "HomeFragment";
-    private LinearLayout noInternet;
     private Button refreshButton;
     private RecyclerView recyclerView;
 
@@ -58,6 +61,8 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
 
     private SearchView searchView;
     private SearchedPostsViewModel searchedPostsViewModel;
+    private LinearLayout main, noInternet, shimmerLoader;
+    private ShimmerFrameLayout shimmerFrameLayout;
 
     @Inject
     NetworkStateCheck networkStateCheck;
@@ -79,11 +84,16 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
         super.onViewCreated(view, savedInstanceState);
 
         noInternet = view.findViewById(R.id.no_internet);
+        main = view.findViewById(R.id.main_screen);
+        shimmerLoader = view.findViewById(R.id.shimmer_loader);
+        shimmerFrameLayout = view.findViewById(R.id.shimmer_layout);
         refreshButton = view.findViewById(R.id.refreshBtn);
         postRecyclerView = view.findViewById(R.id.postRecyclerView);
         searchView = view.findViewById(R.id.searchView);
-
         searchedPostsViewModel = new ViewModelProvider(requireActivity()).get(SearchedPostsViewModel.class);
+
+        shimmerLoader.setVisibility(View.VISIBLE);
+        shimmerFrameLayout.startShimmer();
 
         postsList = new ArrayList<>();
 
@@ -100,6 +110,8 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
                 if (result) {
                     //textView.setVisibility(View.VISIBLE);
                     noInternet.setVisibility(View.GONE);
+                    shimmerLoader.setVisibility(View.GONE);
+                    main.setVisibility(View.VISIBLE);
                     Toast.makeText(requireActivity(), "Connected", Toast.LENGTH_SHORT).show();
 
                     loadAllPosts();
@@ -107,6 +119,8 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
                 else{
                     //textView.setVisibility(View.GONE);
                     noInternet.setVisibility(View.VISIBLE);
+                    shimmerLoader.setVisibility(View.GONE);
+                    main.setVisibility(View.GONE);
                     Toast.makeText(requireActivity(), "No Internet", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -142,7 +156,7 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
                 postsList.clear();
                 postsList = posts;
                 postRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-                postRecyclerView.setAdapter(new PostAdapter(postsList));
+                postRecyclerView.setAdapter(new PostAdapter(postsList, HomeFragment.this));
             }
         });
 
@@ -206,8 +220,14 @@ public class HomeFragment extends Fragment implements SearchView.OnQueryTextList
                 Log.d(TAG, "onChanged: "+posts.size());
                 postsList = posts;
                 postRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-                postRecyclerView.setAdapter(new PostAdapter(postsList));
+                postRecyclerView.setAdapter(new PostAdapter(postsList, HomeFragment.this));
             }
         });
+    }
+
+    @Override
+    public void onItemClick(Post post, View view) {
+        NavDirections navDirections = HomeFragmentDirections.actionHomeFragmentNavToViewAddFragment(post);
+        Navigation.findNavController(view).navigate(navDirections);
     }
 }

@@ -1,14 +1,18 @@
 package com.example.realestate_java.view;
 
 import androidx.activity.OnBackPressedDispatcher;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
 import android.util.ArraySet;
+import android.view.View;
 
 import com.example.realestate_java.R;
 import com.example.realestate_java.databinding.ActivityFragmentContainerBinding;
@@ -60,5 +64,22 @@ public class FragmentContainerActivity extends AppCompatActivity {
 
         NavigationUI.setupWithNavController(binding.bottomNavigationView, navController);
 
+        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+            @Override
+            public void onDestinationChanged(@NonNull NavController navController, @NonNull NavDestination navDestination, @Nullable Bundle bundle) {
+                if (navDestination.getId() == R.id.viewAddFragment){
+                    binding.bottomNavigationView.setVisibility(View.GONE);
+                }
+                else {
+                    binding.bottomNavigationView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        return navController.navigateUp();
     }
 }

@@ -28,16 +28,17 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/_100sdp"
         android:background="@color/mainBlue"
+        android:gravity="right"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:gravity="right"
         tools:ignore="RtlHardcoded">
 
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/holder_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_4sdp"
@@ -85,19 +86,18 @@
             android:gravity="left"
             android:text="Phone: "
             android:textAppearance="@style/TextAppearance.Material3.DisplaySmall"
-            android:textSize="@dimen/_13ssp"
-            />
+            android:textSize="@dimen/_13ssp" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/logOut"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Logout"
             android:layout_marginStart="@dimen/_20sdp"
             android:layout_marginTop="@dimen/_10sdp"
             android:layout_marginEnd="@dimen/_20sdp"
             android:layout_marginBottom="@dimen/_20sdp"
-            />
+            android:background="@drawable/button_background"
+            android:text="Logout" />
     </LinearLayout>
 
     <ImageView
@@ -115,5 +115,32 @@
         app:layout_constraintVertical_bias="0.52"
         app:srcCompat="@drawable/ic_baseline_add_circle_24" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="?attr/colorSurface"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/holder_layout">
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:layout_marginBottom="@dimen/_1sdp"
+            android:background="?android:attr/listDivider" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:layout_marginBottom="@dimen/_1sdp"
+            android:text="Your posts"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textSize="@dimen/_12ssp" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

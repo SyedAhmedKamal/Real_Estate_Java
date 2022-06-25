@@ -211,7 +211,7 @@ public class CreateNewAddActivity extends AppCompatActivity implements SelectIma
                             user.getUid(),
                             userInfo.getName(),
                             userInfo.getProfileImageUrl(),
-                            (new SimpleDateFormat("ddMMyyyyhhmmss")).format(new Date()),
+                            String.valueOf(System.currentTimeMillis()),
                             imgUrlList,
                             title,
                             subTitle,

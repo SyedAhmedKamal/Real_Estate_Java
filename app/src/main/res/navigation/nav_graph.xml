@@ -9,7 +9,11 @@
         android:id="@+id/homeFragment_nav"
         android:name="com.example.realestate_java.view.fragments.HomeFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_nav_to_viewAddFragment"
+            app:destination="@id/viewAddFragment" />
+    </fragment>
     <fragment
         android:id="@+id/myFavouritesListFragment_nav"
         android:name="com.example.realestate_java.view.fragments.MyFavouritesListFragment"
