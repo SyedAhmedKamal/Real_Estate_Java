@@ -48,7 +48,7 @@ public class NoInternetFragment extends Fragment {
             public void onChanged(Boolean result) {
 
                 if (result) {
-                    requireActivity(). getSupportFragmentManager().popBackStack();
+                    //requireActivity(). getSupportFragmentManager().popBackStack();
                 }
             }
         });

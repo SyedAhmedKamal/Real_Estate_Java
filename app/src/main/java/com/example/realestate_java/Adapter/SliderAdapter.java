@@ -30,18 +30,15 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
     public static class SliderViewHolder extends RecyclerView.ViewHolder {
 
         RoundedImageView imageView;
-        TextView textView;
 
         public SliderViewHolder(@NonNull View itemView) {
             super(itemView);
 
             imageView = itemView.findViewById(R.id.image_slider);
-            textView = itemView.findViewById(R.id.tv_slider);
         }
 
         void bind(SliderItem sliderItem) {
             imageView.setImageResource(sliderItem.getImageID());
-            textView.setText(sliderItem.getText());
         }
     }
 

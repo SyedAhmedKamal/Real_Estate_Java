@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -76,6 +77,7 @@ public class UserProfileAdapterMVT extends RecyclerView.Adapter<RecyclerView.Vie
 
         ImageView imageView;
         TextView category, subCategory, location;
+        CardView cardView;
 
         public ProfilePostsView(@NonNull View itemView) {
             super(itemView);
@@ -83,6 +85,7 @@ public class UserProfileAdapterMVT extends RecyclerView.Adapter<RecyclerView.Vie
             category = itemView.findViewById(R.id.tv_category);
             subCategory = itemView.findViewById(R.id.subCatgory);
             location = itemView.findViewById(R.id.tv_location);
+            cardView = itemView.findViewById(R.id.card_view);
         }
 
         void bind(int position) {
@@ -93,6 +96,10 @@ public class UserProfileAdapterMVT extends RecyclerView.Adapter<RecyclerView.Vie
             category.setText(post.getPostCategory());
             subCategory.setText(post.getPostSubCategory());
             location.setText(post.getAddress());
+
+            cardView.setOnClickListener(view -> {
+                listener.onItemClick(position, view);
+            });
         }
     }
 

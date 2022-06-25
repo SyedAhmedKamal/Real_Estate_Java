@@ -22,12 +22,23 @@
         android:name="com.example.realestate_java.view.fragments.UserProfileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_user_profile" >
-
+        <action
+            android:id="@+id/action_userProfileFragment_nav_to_viewAddFragment"
+            app:destination="@id/viewAddFragment" />
     </fragment>
     <activity
         android:id="@+id/createNewAddActivity_nav"
         android:name="com.example.realestate_java.view.CreateNewAddActivity"
         android:label="Create New Advertisement"
         tools:layout="@layout/activity_create_new_add" />
+    <fragment
+        android:id="@+id/viewAddFragment"
+        android:name="com.example.realestate_java.view.fragments.ViewAddFragment"
+        android:label="fragment_view_add"
+        tools:layout="@layout/fragment_view_add" >
+        <argument
+            android:name="myPost"
+            app:argType="com.example.realestate_java.model.Post" />
+    </fragment>
 
 </navigation>

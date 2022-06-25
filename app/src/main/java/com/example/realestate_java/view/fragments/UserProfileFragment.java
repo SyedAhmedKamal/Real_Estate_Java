@@ -19,6 +19,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.FragmentNavigator;
+import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -138,10 +142,10 @@ public class UserProfileFragment extends Fragment implements UserProfileClickLis
             @Override
             public void onChanged(ArrayList<Post> posts) {
                 postsList = posts;
-                Log.d(TAG, "onChanged: "+posts.size());
+                Log.d(TAG, "onChanged: " + posts.size());
 
-                for (Post post:posts) {
-                    Log.d(TAG, "onChanged: postData - "+post.getPostTitle());
+                for (Post post : posts) {
+                    Log.d(TAG, "onChanged: postData - " + post.getPostTitle());
                     list.add(new UserProfileAdapterModel(VIEW_TWO_POSTS, post));
                     adapter = new UserProfileAdapterMVT(list, UserProfileFragment.this);
                     recyclerView.setAdapter(adapter);
@@ -221,6 +225,17 @@ public class UserProfileFragment extends Fragment implements UserProfileClickLis
         startActivity(new Intent(requireActivity(), SignInActivity.class));
         requireActivity().finish();
     }
+
+    @Override
+    public void onItemClick(int position, View view) {
+        Log.d(TAG, "onItemClick: list size: "+postsList);
+        Log.d(TAG, "onItemClick: Position:" + position + " Category");
+        Post post = postsList.get(position-1);
+        Log.d(TAG, "onItemClick: Position:" + position + " Category"+post.getPostCategory());
+        NavDirections navDirections = UserProfileFragmentDirections.actionUserProfileFragmentNavToViewAddFragment(post);
+        Navigation.findNavController(view).navigate(navDirections);
+    }
+
 
     @Override
     public void onDestroy() {

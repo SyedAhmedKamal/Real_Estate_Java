@@ -67,6 +67,8 @@ public class CreateNewAddActivity extends AppCompatActivity implements SelectIma
     private ActivityResultLauncher<Intent> activityResultLauncherMaps;
     private static double karachiLat = 24.8607;
     private static double karachiLang = 67.0011;
+    private static String address;
+    private static String locality;
 
     ProfileInfoRepo profileInfoRepo;
 
@@ -168,8 +170,9 @@ public class CreateNewAddActivity extends AppCompatActivity implements SelectIma
                     .getFromLocation(karachiLat, karachiLang, 1);
             if (addresses != null) {
                 binding.setAddress.setText(addresses.get(0).getAddressLine(0));
-                postObject = new Post();
-                postObject.setAddress(addresses.toString());
+                binding.setAddress.setText(addresses.get(0).getLocality());
+                address = addresses.get(0).getAddressLine(0); // Full address
+                locality = addresses.get(0).getLocality(); // town + district
             }
             Log.i(TAG, "upload now ADDRESS" + addresses.get(0).getAddressLine(0));
         } catch (IOException e) {
@@ -190,7 +193,11 @@ public class CreateNewAddActivity extends AppCompatActivity implements SelectIma
             binding.editTextContactInfo.setError("Required*");
         } else if (imageList.size() == 0) {
             Toast.makeText(this, "Select at least one image", Toast.LENGTH_SHORT).show();
-        } else {
+        }
+        else if (address.isEmpty()){
+            Toast.makeText(this, "Select Location", Toast.LENGTH_SHORT).show();
+        }
+        else {
 
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -213,7 +220,9 @@ public class CreateNewAddActivity extends AppCompatActivity implements SelectIma
                             price,
                             karachiLat,
                             karachiLang,
-                            contactInfo
+                            contactInfo,
+                            address,
+                            locality
                     );
 
                     postRepository.storeDataToFirebaseDB(postObject).observe(CreateNewAddActivity.this, new Observer<Boolean>() {

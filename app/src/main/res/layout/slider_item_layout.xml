@@ -2,10 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="@dimen/_170sdp"
-    android:layout_height="@dimen/_120sdp"
-    android:padding="@dimen/_7sdp"
-    >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/image_slider"
@@ -16,23 +14,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:riv_corner_radius="@dimen/_12sdp" />
-
-    <TextView
-        android:id="@+id/tv_slider"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:elevation="@dimen/_10sdp"
-        android:text="TextView"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_16ssp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.78"
-        app:layout_constraintStart_toStartOf="@+id/image_slider"
-        app:layout_constraintTop_toTopOf="@+id/image_slider"
-        app:layout_constraintVertical_bias="0.79" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
