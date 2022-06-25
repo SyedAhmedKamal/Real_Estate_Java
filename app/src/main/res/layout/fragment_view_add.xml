@@ -34,7 +34,7 @@
                     android:clipToPadding="false"
                     android:orientation="horizontal"
                     android:padding="@dimen/_2sdp"
-                    android:visibility="invisible"
+                    android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/appBarLayout2" />
@@ -55,6 +55,7 @@
                 android:padding="@dimen/_7sdp">
 
                 <TextView
+                    android:textStyle="bold"
                     android:id="@+id/tv_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -84,8 +85,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/_7sdp"
                     android:text="Subtitle"
-                    android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title"
-                    android:textSize="@dimen/_17ssp" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                    android:textSize="@dimen/_14ssp" />
 
             </LinearLayout>
 
@@ -108,16 +109,17 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/_7sdp"
                     android:text="Category*"
-                    android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title"
-                    android:textSize="@dimen/_17ssp" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                    android:textSize="@dimen/_14ssp" />
 
                 <TextView
+                    android:id="@+id/tv_subCat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/_7sdp"
                     android:text="Sub-category"
-                    android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title"
-                    android:textSize="@dimen/_17ssp" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                    android:textSize="@dimen/_14ssp" />
 
             </LinearLayout>
 
@@ -136,12 +138,13 @@
                 android:padding="@dimen/_7sdp">
 
                 <TextView
+                    android:textStyle="bold"
                     android:id="@+id/tv_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/_7sdp"
                     android:text="Price"
-                    android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                     android:textSize="@dimen/_17ssp" />
 
             </LinearLayout>
@@ -160,14 +163,6 @@
                 android:orientation="vertical"
                 android:padding="@dimen/_7sdp">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_7sdp"
-                    android:text="Location"
-                    android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title"
-                    android:textSize="@dimen/_17ssp" />
-
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -178,17 +173,18 @@
                         android:id="@+id/set_map"
                         android:name="com.google.android.gms.maps.SupportMapFragment"
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_80sdp"
+                        android:layout_height="@dimen/_120sdp"
                         tools:context=".view.MapsActivity" />
                 </FrameLayout>
 
                 <TextView
-                    android:id="@+id/tv_address"
+                    android:id="@+id/tv_set_loaction"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/_7sdp"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                    android:textSize="@dimen/_13ssp" />
+                    android:text="Location"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                    android:textSize="@dimen/_14ssp" />
 
             </LinearLayout>
 
@@ -211,8 +207,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/_7sdp"
                     android:text="Contact"
-                    android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title"
-                    android:textSize="@dimen/_17ssp" />
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                    android:textSize="@dimen/_14ssp" />
 
             </LinearLayout>
 

@@ -2,19 +2,13 @@ package com.example.realestate_java.model;
 
 public class SliderItem {
 
-    private int imageID;
-    private String text;
+    private String url;
 
-    public SliderItem(int imageID, String text) {
-        this.imageID = imageID;
-        this.text = text;
+    public SliderItem(String url) {
+        this.url = url;
     }
 
-    public int getImageID() {
-        return imageID;
-    }
-
-    public String getText() {
-        return text;
+    public String getUrl() {
+        return url;
     }
 }

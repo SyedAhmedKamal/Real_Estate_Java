@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.bumptech.glide.Glide;
 import com.example.realestate_java.R;
 import com.example.realestate_java.model.SliderItem;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -22,7 +23,7 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
     private ArrayList<SliderItem> sliderItemList;
     private ViewPager2 viewPager2;
 
-    public SliderAdapter(ArrayList<SliderItem> sliderItemList) {
+    public SliderAdapter(ArrayList<SliderItem> sliderItemList, ViewPager2 viewPager2) {
         this.sliderItemList = sliderItemList;
         this.viewPager2 = viewPager2;
     }
@@ -37,8 +38,8 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
             imageView = itemView.findViewById(R.id.image_slider);
         }
 
-        void bind(SliderItem sliderItem) {
-            imageView.setImageResource(sliderItem.getImageID());
+        void bind(String url) {
+            Glide.with(itemView.getContext()).load(url).into(imageView);
         }
     }
 
@@ -53,7 +54,7 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
 
     @Override
     public void onBindViewHolder(@NonNull SliderViewHolder holder, int position) {
-        holder.bind(sliderItemList.get(position));
+        holder.bind(sliderItemList.get(position).getUrl());
     }
 
     @Override
