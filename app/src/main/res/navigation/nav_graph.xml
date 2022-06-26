@@ -12,7 +12,9 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_homeFragment_nav_to_viewAddFragment"
-            app:destination="@id/viewAddFragment" />
+            app:destination="@id/viewAddFragment"
+            app:enterAnim="@anim/slide_left"
+            />
     </fragment>
     <fragment
         android:id="@+id/myFavouritesListFragment_nav"
@@ -28,7 +30,9 @@
         tools:layout="@layout/fragment_user_profile" >
         <action
             android:id="@+id/action_userProfileFragment_nav_to_viewAddFragment"
-            app:destination="@id/viewAddFragment" />
+            app:destination="@id/viewAddFragment"
+            app:enterAnim="@anim/slide_left"
+            />
     </fragment>
     <activity
         android:id="@+id/createNewAddActivity_nav"
@@ -38,19 +42,22 @@
     <fragment
         android:id="@+id/viewAddFragment"
         android:name="com.example.realestate_java.view.fragments.ViewAddFragment"
-        android:label="fragment_view_add"
+        android:label=""
         tools:layout="@layout/fragment_view_add" >
         <argument
             android:name="myPost"
             app:argType="com.example.realestate_java.model.Post" />
         <action
             android:id="@+id/action_viewAddFragment_to_viewImagesFragment"
-            app:destination="@id/viewImagesFragment" />
+            app:destination="@id/viewImagesFragment"
+            app:enterAnim="@anim/slide_up"
+            app:exitAnim="@anim/slide_down"
+            />
     </fragment>
     <fragment
         android:id="@+id/viewImagesFragment"
         android:name="com.example.realestate_java.view.fragments.ViewImagesFragment"
-        android:label="fragment_view_images"
+        android:label=""
         tools:layout="@layout/fragment_view_images" >
         <argument
             android:name="myImagePosition"
