@@ -43,6 +43,21 @@
         <argument
             android:name="myPost"
             app:argType="com.example.realestate_java.model.Post" />
+        <action
+            android:id="@+id/action_viewAddFragment_to_viewImagesFragment"
+            app:destination="@id/viewImagesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewImagesFragment"
+        android:name="com.example.realestate_java.view.fragments.ViewImagesFragment"
+        android:label="fragment_view_images"
+        tools:layout="@layout/fragment_view_images" >
+        <argument
+            android:name="myImagePosition"
+            app:argType="integer" />
+        <argument
+            android:name="myPost"
+            app:argType="com.example.realestate_java.model.Post" />
     </fragment>
 
 </navigation>

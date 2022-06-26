@@ -12,6 +12,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.bumptech.glide.Glide;
 import com.example.realestate_java.R;
 import com.example.realestate_java.model.SliderItem;
+import com.example.realestate_java.uitl.ViewImagesClickListener;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.util.ArrayList;
@@ -22,10 +23,12 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
 
     private ArrayList<SliderItem> sliderItemList;
     private ViewPager2 viewPager2;
+    private static ViewImagesClickListener listener;
 
-    public SliderAdapter(ArrayList<SliderItem> sliderItemList, ViewPager2 viewPager2) {
+    public SliderAdapter(ArrayList<SliderItem> sliderItemList, ViewPager2 viewPager2, ViewImagesClickListener listener) {
         this.sliderItemList = sliderItemList;
         this.viewPager2 = viewPager2;
+        SliderAdapter.listener = listener;
     }
 
     public static class SliderViewHolder extends RecyclerView.ViewHolder {
@@ -40,6 +43,11 @@ public class SliderAdapter extends RecyclerView.Adapter<SliderAdapter.SliderView
 
         void bind(String url) {
             Glide.with(itemView.getContext()).load(url).into(imageView);
+
+            imageView.setOnClickListener(view -> {
+                listener.omImageClick(getAdapterPosition(), view);
+            });
+
         }
     }
 

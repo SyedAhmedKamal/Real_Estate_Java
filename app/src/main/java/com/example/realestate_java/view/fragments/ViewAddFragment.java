@@ -5,6 +5,10 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavDirections;
+import androidx.navigation.Navigation;
+import androidx.navigation.Navigator;
+import androidx.navigation.fragment.FragmentNavigator;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.util.Log;
@@ -17,6 +21,7 @@ import com.example.realestate_java.Adapter.SliderAdapter;
 import com.example.realestate_java.R;
 import com.example.realestate_java.model.Post;
 import com.example.realestate_java.model.SliderItem;
+import com.example.realestate_java.uitl.ViewImagesClickListener;
 import com.example.realestate_java.view.CreateNewAddActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -26,9 +31,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.Executors;
 
-public class ViewAddFragment extends Fragment {
+public class ViewAddFragment extends Fragment implements ViewImagesClickListener {
 
     private static final String TAG = "ViewAddFragment";
 
@@ -36,6 +43,7 @@ public class ViewAddFragment extends Fragment {
     private TextView title, subTitle, category, subCategory, price, location, contact;
     private Post post;
     private GoogleMap mMap;
+    private ArrayList<SliderItem> sliderItems;
 
 
     @Override
@@ -100,13 +108,19 @@ public class ViewAddFragment extends Fragment {
             location.setText(post.getAddress());
             contact.setText(post.getContactInfo());
 
-            ArrayList<SliderItem> sliderItems = new ArrayList<>();
+            sliderItems = new ArrayList<>();
             for (int i = 0; i < post.getPostImagesList().size(); i++) {
                 sliderItems.add(new SliderItem(post.getPostImagesList().get(i)));
             }
 
             Log.d(TAG, "onViewCreated: " + sliderItems.size());
-            viewPager2.setAdapter(new SliderAdapter(sliderItems, viewPager2));
+            viewPager2.setAdapter(new SliderAdapter(sliderItems, viewPager2, ViewAddFragment.this));
         }
+    }
+
+    @Override
+    public void omImageClick(int position, View view) {
+        NavDirections navDirections= ViewAddFragmentDirections.actionViewAddFragmentToViewImagesFragment(position, post);
+        Navigation.findNavController(view).navigate(navDirections);
     }
 }

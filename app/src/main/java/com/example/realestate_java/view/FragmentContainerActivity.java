@@ -67,7 +67,7 @@ public class FragmentContainerActivity extends AppCompatActivity {
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
             public void onDestinationChanged(@NonNull NavController navController, @NonNull NavDestination navDestination, @Nullable Bundle bundle) {
-                if (navDestination.getId() == R.id.viewAddFragment){
+                if (navDestination.getId() == R.id.viewAddFragment || navDestination.getId() == R.id.viewImagesFragment){
                     binding.bottomNavigationView.setVisibility(View.GONE);
                 }
                 else {

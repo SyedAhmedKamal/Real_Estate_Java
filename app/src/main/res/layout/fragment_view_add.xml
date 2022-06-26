@@ -35,9 +35,8 @@
                     android:orientation="horizontal"
                     android:padding="@dimen/_2sdp"
                     android:visibility="visible"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/appBarLayout2" />
+                    android:transitionName="pager_small"
+                    />
 
             </FrameLayout>
 
@@ -55,14 +54,14 @@
                 android:padding="@dimen/_7sdp">
 
                 <TextView
-                    android:textStyle="bold"
                     android:id="@+id/tv_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/_7sdp"
                     android:text="Title*"
                     android:textAppearance="@style/TextAppearance.Material3.ActionBar.Title"
-                    android:textSize="@dimen/_17ssp" />
+                    android:textSize="@dimen/_17ssp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -138,14 +137,14 @@
                 android:padding="@dimen/_7sdp">
 
                 <TextView
-                    android:textStyle="bold"
                     android:id="@+id/tv_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/_7sdp"
                     android:text="Price"
                     android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                    android:textSize="@dimen/_17ssp" />
+                    android:textSize="@dimen/_17ssp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
